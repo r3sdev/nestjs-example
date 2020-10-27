@@ -14,8 +14,9 @@ async function bootstrap() {
   const options = new DocumentBuilder()
     .setTitle('Items example')
     .setDescription('The Items API description')
-    .setVersion('1.0')
+    .setVersion('0.0.1')
     .addTag('items')
+    .setTermsOfService('http://www.ramsy.it/tos.html')
     .setContact('Ramsy IT', 'http://www.ramsy.it', 'ramsy@ramsy.it')
     .addServer(`${scheme}://${host}:${port}`)
     .build();
