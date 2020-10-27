@@ -10,11 +10,12 @@ import { MongoClient, Db } from 'mongodb';
       provide: 'DATABASE_CONNECTION',
       useFactory: async (configService: ConfigService): Promise<Db> => {
         try {
-          const client = await MongoClient.connect(configService.get('MONGO_URI'), {
-            useUnifiedTopology: true
+          const client = await MongoClient.connect(configService.get('database.uri'), {
+            useUnifiedTopology: true,
+            useNewUrlParser: true,
           });
 
-          return client.db(configService.get('MONGO_DB_NAME'));
+          return client.db(configService.get('database.name'));
         } catch (e) {
           throw e;
         }
