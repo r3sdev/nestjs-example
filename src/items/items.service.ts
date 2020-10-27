@@ -1,9 +1,10 @@
 import { Inject, Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
-import { Db, ObjectID } from 'mongodb';
-import { Item } from './item.interface';
+import { Db, FilterQuery, ObjectID } from 'mongodb';
+import { Item } from './entity/item';
+import { ItemService as _ItemService } from './items.interface';
 
 @Injectable()
-export class ItemsService {
+export class ItemsService  {
 
   TABLE_NAME = 'items';
 
@@ -16,13 +17,13 @@ export class ItemsService {
     return await this.db.collection(this.TABLE_NAME).find({}).toArray();
   }
 
-  async findOne(id: string): Promise<Item> {
-    if (!ObjectID.isValid(id)) {
+  async findOne(options: FilterQuery<Item>): Promise<Item> {
+    if (!ObjectID.isValid(options.id)) {
       throw new BadRequestException;
     }
 
     const response = await this.db.collection(this.TABLE_NAME).findOne({
-      _id: new ObjectID(id),
+      _id: new ObjectID(options.id),
     });
 
     if (!response) {
@@ -35,6 +36,5 @@ export class ItemsService {
   async create(body: Item): Promise<void> {
     await this.db.collection(this.TABLE_NAME).insertOne(body);
   }
-
 
 }
