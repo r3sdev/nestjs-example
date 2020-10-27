@@ -9,6 +9,7 @@ import {configuration} from '../config';
   imports: [
     ItemsModule,
     ConfigModule.forRoot({
+      envFilePath: ['.env.development.local', '.env.development'],
       isGlobal: true,
       load: [configuration],
     }),
